@@ -1,17 +1,15 @@
-import React, { FC } from 'react';
-import { FieldError, UseFormRegister } from 'react-hook-form';
-import { TFormValues } from '../../pages/Registration';
+import { FieldError, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import cl from "./_FormTextInput.module.scss"
 
-interface IFormTextInput{
-    name : keyof TFormValues,
+interface IFormTextInput<T extends FieldValues>{
+    name :  Path<T>,
     type : string,
     title : string,
-    register : UseFormRegister<TFormValues>,
+    register : UseFormRegister<T>,
     error : FieldError | undefined,
     maxLength? : number
 }
-const FormTextInput:FC<IFormTextInput> = ({name, register, type, title, error, maxLength}) => {
+export default function FormTextInput<T extends FieldValues>({name, register, type, title, error, maxLength}:IFormTextInput<T>) {
     return (
         <label className={cl.label} htmlFor={name}>
             <p className={cl.inputTitle}>
@@ -23,4 +21,3 @@ const FormTextInput:FC<IFormTextInput> = ({name, register, type, title, error, m
     );
 };
 
-export default React.memo(FormTextInput);

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z, ZodType } from "zod";
 import FormTextInput from "../UI/FormTextInput/FormTextInput";
 
-export type TFormValues = {
+type TFormValues = {
   firstName: string;
   lastName: string;
   email: string;
@@ -17,8 +17,9 @@ const Registration = () => {
     .object({
       firstName: z
         .string()
-        .min(3, { message: "FirstName must be at least 3 characters" })
-        .includes(";&*#$", { message: "Неваилдное имя!" }),
+        .min(3, { message: "FirstName must be at least 3 characters" }).refine((value) => !/[*&^%$#@!)(_+=|]/.test(value), {
+            message: 'Невалидные вещи',
+          }),
       lastName: z
         .string()
         .min(3, { message: "Lastname must be at least 3 characters" }),
@@ -32,6 +33,8 @@ const Registration = () => {
       path: ["confirmPassword"],
       message: "Пароли не совпадают.",
     });
+
+
   const {
     register,
     formState: { errors },
@@ -40,6 +43,8 @@ const Registration = () => {
     resolver: zodResolver(UserSchema),
     mode: "onBlur",
   });
+
+  
 
   const {} = useUser();
 
