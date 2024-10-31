@@ -1,26 +1,22 @@
 import { create } from "zustand";
+import { User } from "../types/user";
 
-export interface UserState {
-    first_name: string;
-    last_name: string;
-    password: string;
-    confirmation: string;
-    email: string;
-    setUserInfo: (user: User) => void
+export interface UserState extends User {
+    isUser: boolean,
+    setUser: (user: UserState) => void;
+    updateUserInfo: (user: User) => void;
 }
 
-export interface User extends Partial<UserState> {}
-
 export const useUser = create<UserState>((set) => ({
-    first_name: '',
-    last_name: '',
-    password: '',
-    confirmation: '',
+    id: 0,
+    firstName: '',
+    lastName: '',
     email: '',
-    createUser: (user: UserState) => {
+    isUser: false,
+    setUser: (user: UserState) => {
         set(user)
     },
-    setUserInfo: (user: User) => {
+    updateUserInfo: (user: User) => {
         set(user)
     }
 }))

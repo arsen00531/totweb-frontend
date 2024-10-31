@@ -1,9 +1,10 @@
 import { FieldError, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import cl from "./_FormTextInput.module.scss"
+import TextError from '../errors/TextError';
 
 interface IFormTextInput<T extends FieldValues>{
     name :  Path<T>,
-    type : string,
+    type : React.HTMLInputTypeAttribute | undefined,
     title : string,
     register : UseFormRegister<T>,
     error : FieldError | undefined,
@@ -16,7 +17,7 @@ export default function FormTextInput<T extends FieldValues>({name, register, ty
                 {title}
             </p>
             <input maxLength={maxLength ? maxLength : undefined} style={error ? {border : "1px solid red"} : {}} placeholder={title} type={type} {...register(name)} className={cl.textInput} name={name} />
-            {error && <span className={cl.errorMessage}>{error.message}</span>}
+            <TextError error={error?.message} />
         </label>
     );
 };
