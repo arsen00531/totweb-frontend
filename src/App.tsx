@@ -1,10 +1,10 @@
 import Registration from './pages/Registration'
-
+import "./style/scss/registration.scss";
 function App() {
 
   return (
     <>
-      <Registration></Registration>
+      <Registration/>
     </>
   )
 }
