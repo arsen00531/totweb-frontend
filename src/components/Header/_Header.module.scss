@@ -1,0 +1,15 @@
+.my_navbar_toggler_icon {
+    background: none;
+    display: block;
+    span {
+        background-image: var(--bs-navbar-toggler-icon-bg) !important;
+    }
+}
+
+.my_navbar_button_group {
+    display: flex;
+
+    button {
+        border: none;
+    }
+}

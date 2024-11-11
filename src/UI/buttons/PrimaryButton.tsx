@@ -1,3 +1,5 @@
+import { Button } from "react-bootstrap"
+
 type Props = {
   text: string,
   type?: "submit" | "reset" | "button" | undefined,
@@ -6,11 +8,6 @@ type Props = {
 
 export default function PrimaryButton({ text, type, addClasses = '' }: Props) {
   return (
-    <button 
-      type={type}
-      className={'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ' + addClasses}
-    >
-      {text}
-    </button>
+    <Button type={type} className={addClasses}>{text}</Button>
   )
 }

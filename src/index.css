@@ -1,3 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+body {
+   overflow-x: hidden;
+}
+
+
+@keyframes op {
+    0% {
+       filter:blur(50px) opacity(0);
+    }
+    100% {
+       filter:blur(0px) opacity(1);
+    }
+}
+
+@keyframes opDown {
+    0% {
+       filter:blur(0px) opacity(1);
+    }
+    100% {
+       filter:blur(50px) opacity(0);
+    }
+}

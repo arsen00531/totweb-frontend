@@ -1,0 +1,39 @@
+.vacancy {
+    border-radius: 8px;
+    box-shadow: 0 1px 13px rgba(0, 0, 0, .15);
+    position: relative;
+
+    .line {
+        border-bottom: 1px solid gray;
+
+        .innerLine {
+            display: flex;
+            justify-content: space-between;
+            max-width: 80%;
+            max-height: 35px;
+        }
+    }
+
+    .companyName {
+        display: flex;
+    }
+
+    .vacancyDate {
+        margin-top: "10px";
+        position: absolute;
+        bottom: 0;
+        right: 23px;
+    }
+
+    .moreDetail {
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .vacancy {
+        .moreDetail {
+            padding: 8px 12px;
+        }
+    }
+}

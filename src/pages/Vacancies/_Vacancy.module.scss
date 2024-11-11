@@ -1,0 +1,130 @@
+.io_search_custom {
+    position: absolute;
+    top: 24%;
+    left: 0;
+    padding-left: 0.25em;
+    margin-left: 0.25em;
+}
+
+.MDBInput_custom {
+    padding-left: 2.2em !important;
+}
+
+.MDBInput_label_custom {
+    padding-left: 1.5em;
+}
+
+.MDBInput_sticy_div {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.MDBInputGroup_custom {
+    margin: 0px -20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(50px);
+    border-radius: 20px;
+}
+
+.filter__header {
+    display: flex;
+
+    .filter {
+        min-width: 320px;
+
+        .filterClose {
+            display: none;
+        }
+
+        .acceptButtons {
+            display: none;
+        }
+
+        .filter__child {
+            position: sticky;
+            top: 5rem;
+            max-height: 500px;
+        }
+    }
+
+    .activateFilter {
+        display: none;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 992px) {
+    .filter__header {
+        .activateFilter {
+            display: flex;
+        }
+    }
+    
+    .filter {
+        display: none;
+    }
+
+    .filter.active {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 100;
+
+        .filterClose {
+            display: block;
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            cursor: pointer;
+        }
+
+        .acceptButtons {
+            display: block;
+            
+            button {
+                position: absolute;
+                width: 80%;
+                left: 50%;
+                transform: translateX(-51%);
+            }
+
+            .nullFilter {
+                bottom: 15%;
+            }
+
+            .acceptFilter {
+                bottom: 8%;
+            }
+        }
+
+        .filter__child {
+            margin-left: 10%;
+
+            .filter__child_city {
+                width: 40%;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .MDBInput_sticy_div {
+        .MDBInputGroup_custom {
+            width: 100vw;
+        }
+    }
+
+    .filter.active {
+        .filter__child {
+            .filter__child_city {
+                width: 80%;
+            }
+        }
+    }
+}
