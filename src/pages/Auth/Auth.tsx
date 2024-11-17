@@ -12,6 +12,7 @@ import { UserRoles } from "../../models/User";
 import UserChoise from "../../UI/blocks/UserChoise";
 import { UserAuthSchema } from "./config/userShema";
 import { useUser } from "../../store/user.store";
+import { HOME_ROUTE } from "../../utils/constants/routes.constants";
 
 const Auth = () => {
   const [isUserExists, setIsUserExists] = useState(true)
@@ -38,7 +39,7 @@ const Auth = () => {
       }
       await login(data.email, data.password, [user])
 
-      navigate('/')
+      navigate(HOME_ROUTE)
     } catch(error) {
       const err = error as AxiosError
 

@@ -1,5 +1,5 @@
 export interface IProfession {
     id: number;
-    name: string;
-    vacancyId: number;
+    name: string | null;
+    vacancyId: number | null;
 }

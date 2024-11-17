@@ -1,14 +1,36 @@
-import Home from "../pages/Home/Home";
-import Vacancy from "../pages/Vacancies/Vacancies";
-import { HOME_ROUTE, VACANCY } from "../utils/constants/routes.constants";
+import { UserRoles } from "../models/User";
+import Auth from "../pages/Auth/Auth";
+import CreateVacancy from "../pages/CreateVacancy/CreateVacancy";
+import Profile from "../pages/Profile/Profile";
+import Registration from "../pages/Registration/Registration";
+import { CREATE_VACANCY_ROUTE, EDIT_PROFILE_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from "../utils/constants/routes.constants";
+import EditProfile from "../pages/EditProfile/EditProfile";
 
 export const privateRoutes = [
   {
-    path: VACANCY,
-    element: <Vacancy />
+    roles: [UserRoles.Company, UserRoles.Student],
+    path: PROFILE_ROUTE,
+    element: <Profile />
   }, 
   {
-    path: HOME_ROUTE,
-    element: <Home />
+    roles: [UserRoles.Company, UserRoles.Student],
+    path: EDIT_PROFILE_ROUTE,
+    element: <EditProfile />
   }, 
+  {
+    roles: [UserRoles.Company],
+    path: CREATE_VACANCY_ROUTE,
+    element: <CreateVacancy />
+  }, 
+]
+
+export const noAuthRoutes = [
+  {
+    path: REGISTRATION_ROUTE,
+    element: <Registration />
+  }, 
+  {
+    path: LOGIN_ROUTE,
+    element: <Auth />
+  },
 ]

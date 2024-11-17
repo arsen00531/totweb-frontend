@@ -3,6 +3,7 @@ import { ICompany } from "../../models/Company"
 import { IStudent, UserRoles } from "../../models/User"
 import { Link } from "react-router-dom"
 import SignButton from "../buttons/SignButton"
+import { PROFILE_ROUTE } from "../../utils/constants/routes.constants"
 
 type Props = {
     cl: CSSModuleClasses,
@@ -10,11 +11,11 @@ type Props = {
     isAuth: boolean,
     student: IStudent | null,
     company: ICompany | null,
-    role: UserRoles[] | null,
+    roles: UserRoles[] | null,
     burgerOpen: boolean
 }
 
-const HeaderNavbarButton = ({ cl, isLoading, isAuth, student, company, role, burgerOpen }: Props) => {
+const HeaderNavbarButton = ({ cl, isLoading, isAuth, student, company, roles, burgerOpen }: Props) => {
   return (
     <div className={cl.my_navbar_button_group}>
         {
@@ -23,7 +24,7 @@ const HeaderNavbarButton = ({ cl, isLoading, isAuth, student, company, role, bur
             {
                 isAuth ?
                 <>
-                    <Nav.Link as={Link} to={'/'}>{role?.includes(UserRoles.Student) ? student?.firstName : company?.contactPerson}</Nav.Link>
+                    <Nav.Link as={Link} to={PROFILE_ROUTE}>{roles?.includes(UserRoles.Student) && student?.firstName || roles?.includes(UserRoles.Company) && company?.contactPerson}</Nav.Link>
                 </> :
                 <>
                     <SignButton burgerOpen={burgerOpen} cl={cl} />

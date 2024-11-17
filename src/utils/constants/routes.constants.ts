@@ -1,5 +1,9 @@
 export const ADMIN_ROUTE = '/admin'
 export const LOGIN_ROUTE = '/auth'
 export const REGISTRATION_ROUTE = '/registration'
-export const VACANCY = '/vacancy'
+export const VACANCY_ROUTE = '/vacancy'
 export const HOME_ROUTE = '/'
+export const PROFILE_ROUTE = '/profile'
+export const EDIT_PROFILE_ROUTE = '/editProfile'
+export const DETAILED_VACANCY_ROUTE = `${VACANCY_ROUTE}/detailed`
+export const CREATE_VACANCY_ROUTE = `${VACANCY_ROUTE}/create`

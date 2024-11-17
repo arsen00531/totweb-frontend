@@ -20,6 +20,10 @@ export class StudentAuthService {
     static async refresh(): Promise<AxiosResponse<StudentAuthReponse>> {
         return $api.get<StudentAuthReponse>(`${this.controllerPrefix}/refresh`)
     }
+
+    static async refreshState(): Promise<AxiosResponse<StudentAuthReponse>> {
+        return axios.get<StudentAuthReponse>(`${API_URL}/${this.controllerPrefix}/refresh`, { withCredentials: true })
+    }
 }
 
 export class CompanyAuthService {
@@ -39,5 +43,9 @@ export class CompanyAuthService {
 
     static async refresh(): Promise<AxiosResponse<CompanyAuthReponse>> {
         return $api.get<CompanyAuthReponse>(`${this.controllerPrefix}/refresh`)
+    }
+
+    static async refreshState(): Promise<AxiosResponse<CompanyAuthReponse>> {
+        return axios.get<CompanyAuthReponse>(`${API_URL}/${this.controllerPrefix}/refresh`, { withCredentials: true })
     }
 }

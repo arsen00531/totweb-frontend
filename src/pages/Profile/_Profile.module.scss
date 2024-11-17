@@ -1,0 +1,60 @@
+.profileContainer {
+    box-shadow: 0 1px 13px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    position: relative;
+
+    h4 {
+        font-weight: bold;
+        border-bottom: 1px solid rgb(76, 74, 74, 0.7);
+        padding-bottom: 10px;
+    }
+
+    .trash {
+        border: none;
+        background: #ff000073;
+        border-radius: 4px;
+
+        svg {
+            margin-bottom: 3px;
+        }
+    }
+
+    .edit_infos {
+        margin-bottom: 1.5em;
+
+        h4 {
+            margin-bottom: 1em;
+        }
+    }
+
+    .edit_company_info {
+        div {
+            margin-bottom: 1em;
+        }
+    }
+
+    .project_achievements {
+        .formGroup {
+            margin-bottom: 0.5em;
+        }
+    }
+
+    .contactInfo {
+        margin-bottom: 1em;
+        div {
+            margin-bottom: 0.5em;
+        }
+    }
+
+    .formGroup {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin: 0;
+
+        p {
+            margin: 0;
+            white-space: nowrap;
+        }
+    }
+}

@@ -2,6 +2,9 @@ body {
    overflow-x: hidden;
 }
 
+p {
+   word-break: break-word;
+}
 
 @keyframes op {
     0% {

@@ -11,6 +11,6 @@ export default class VacancyService {
     }
 
     static async findOne(id: number): Promise<AxiosResponse<VacancyReponse>> {
-        return $api.get<VacancyReponse>(`${this.controllerPrefix}/findOne`, { params: { id } })
+        return $api.get<VacancyReponse>(`${this.controllerPrefix}/findOne`, { params: { id: String(id) } })
     }
 }

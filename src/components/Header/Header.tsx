@@ -4,11 +4,10 @@ import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../store/user.store';
 import HeaderNavbarButton from '../../UI/blocks/HeaderNavbarButton';
+import { HOME_ROUTE, VACANCY_ROUTE } from '../../utils/constants/routes.constants';
 
-type Props = {}
-
-const Header = ({}: Props) => {
-  const { isAuth, isLoading, student, company, role } = useUser()
+const Header = () => {
+  const { isAuth, isLoading, student, company, roles } = useUser()
   const [burgerOpen, setBurgerOpen] = useState(false)
   const expand = 'md'
   
@@ -52,15 +51,15 @@ const Header = ({}: Props) => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link as={Link} to={'/'}>Home</Nav.Link>
-                  <Nav.Link as={Link} to={'/vacancy'}>Vacancies</Nav.Link>
+                  <Nav.Link as={Link} to={HOME_ROUTE}>Home</Nav.Link>
+                  <Nav.Link as={Link} to={VACANCY_ROUTE}>Vacancies</Nav.Link>
                   <HeaderNavbarButton 
                     cl={cl}
                     isLoading={isLoading}
                     isAuth={isAuth}
                     student={student}
                     company={company}
-                    role={role}
+                    roles={roles}
                     burgerOpen={burgerOpen}
                   />
                 </Nav>

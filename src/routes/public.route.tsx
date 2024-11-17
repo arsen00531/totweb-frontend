@@ -1,22 +1,17 @@
-import Auth from "../pages/Auth/Auth";
+import DetailedVacancy from "../pages/DetailedVacancy/DetailedVacancy";
 import Home from "../pages/Home/Home";
-import Registration from "../pages/Registration/Registration";
 import Vacancy from "../pages/Vacancies/Vacancies";
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, VACANCY } from "../utils/constants/routes.constants";
+import { DETAILED_VACANCY_ROUTE, HOME_ROUTE, VACANCY_ROUTE } from "../utils/constants/routes.constants";
 
 export const publicRoutes = [
   {
-    path: REGISTRATION_ROUTE,
-    element: <Registration />
-  }, 
-  {
-    path: LOGIN_ROUTE,
-    element: <Auth />
-  }, 
-  {
-    path: VACANCY,
+    path: VACANCY_ROUTE,
     element: <Vacancy />
   }, 
+  {
+    path: DETAILED_VACANCY_ROUTE,
+    element: <DetailedVacancy />
+  },
   {
     path: HOME_ROUTE,
     element: <Home />

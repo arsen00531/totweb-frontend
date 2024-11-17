@@ -1,9 +1,7 @@
 import React from 'react'
 import FindVacancy from '../../components/FindVacancy/FindVacancy'
 
-type Props = {}
-
-const Home = ({  }: Props) => {
+const Home = () => {
   return (
     <main>
       <FindVacancy />

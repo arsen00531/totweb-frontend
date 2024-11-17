@@ -1,4 +1,5 @@
 import { UserRoles } from "./User";
+import { IVacancy } from "./Vacancy";
 
 export interface ICompany {
     id: number | null;
@@ -6,5 +7,16 @@ export interface ICompany {
     email: string | null;
     contactPerson: string | null;
     phone: string | null;
-    role: UserRoles[] | [];
+    industry: string;
+    location: string;
+    size: string;
+    aboutUs: string[];
+    contactEmail: string;
+    contactPhone: string;
+    site: string
+    social: string;
+    projects: string[];
+    reviews: string[];
+    vacancies: IVacancy[];
+    roles: UserRoles[] | [];
 }

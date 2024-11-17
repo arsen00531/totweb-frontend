@@ -10,6 +10,7 @@ import { UserRoles } from "../../models/User";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
 import { CompanyRegistrationSchema, UserRegistrationSchema } from "./config/registrationSchema";
 import { TFormCompanyRegistration, TFormCompanyTextConfigRegistration, TFormUserRegistration, TFormUserTextConfigRegistration } from "./types";
+import { LOGIN_ROUTE } from "../../utils/constants/routes.constants";
 
 const Registration = () => {
   const [isUserExists, setIsUserExists] = useState(false)
@@ -41,7 +42,7 @@ const Registration = () => {
     try {
       await StudentAuthService.registration(data.firstName, data.lastName, data.email, data.password)
 
-      navigate('/auth')
+      navigate(LOGIN_ROUTE)
     } catch(error) {
       const err = error as AxiosError
 
@@ -56,7 +57,7 @@ const Registration = () => {
     try {
       await CompanyAuthService.registration(data.companyName, data.email, data.password, data.contactPerson, data.phone)
 
-      navigate('/auth')
+      navigate(LOGIN_ROUTE)
     } catch(error) {
       const err = error as AxiosError
 

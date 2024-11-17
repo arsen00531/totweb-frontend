@@ -2,9 +2,7 @@ import { Container } from "react-bootstrap"
 import HomeButton from "../../UI/buttons/HomeButton"
 import cl from "./_FindVacancy.module.scss"
 
-type Props = {}
-
-const FindVacancy = ({  }: Props) => {
+const FindVacancy = () => {
   return (
     <section className={cl.findInternship}>
       <Container className={"pt-5 pb-5"}>

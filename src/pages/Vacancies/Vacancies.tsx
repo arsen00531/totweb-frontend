@@ -14,13 +14,11 @@ import H2Black from "../../UI/text/H2Black";
 import { RiFilterFill } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 
-type Props = {}
-
 export interface ICheckboxConfig<T extends boolean> {
   [key: string]: T;
 }
 
-const Vacancies = ({}: Props) => {
+const Vacancies = () => {
   const { vacancies, setVacancies, updateVacancies } = useVacancy()
   const { professions } = useProfession()
 
@@ -127,6 +125,7 @@ const Vacancies = ({}: Props) => {
   }
 
   const handleClickNullFilter = () => {
+    console.log("first")
     setGraphic({
       all: true,
       graphicFullDay: false,
@@ -206,8 +205,8 @@ const Vacancies = ({}: Props) => {
                     (profession, index) => 
                       <CheckBox 
                         key={profession.id} 
-                        label={profession.name} 
-                        name={profession.name} 
+                        label={profession.name ?? ""} 
+                        name={profession.name ?? ""} 
                         checked={isProfessions[index]} 
                         onChange={handleProfessionChange(index)} 
                       />
@@ -234,6 +233,7 @@ const Vacancies = ({}: Props) => {
                 variant={"secondary"} 
                 className={"mt-4"} 
                 style={{ display: isThrow ? "block" : "none" }}
+                onClick={handleClickNullFilter}
               >
                 Сбросить все
               </Button>
@@ -246,7 +246,7 @@ const Vacancies = ({}: Props) => {
                 <RiFilterFill size={20} color={"black"} />
               </Button>
             </div>
-            <p>Найдено вакансий {vacancies.length}</p>
+            <p>Найдено вакансий: {vacancies.length}</p>
             {
               vacancies && 
               <>

@@ -5,12 +5,16 @@ import { PiTreeStructureLight } from "react-icons/pi";
 import cl from './_Vacancy.module.scss'
 import { months } from "../../pages/Vacancies/config/month";
 import H2Black from "../../UI/text/H2Black";
+import { useNavigate } from "react-router-dom";
+import { DETAILED_VACANCY_ROUTE } from "../../utils/constants/routes.constants";
 
 type Props = {
   vacancy: IVacancy
 }
 
 const Vacancy = ({ vacancy }: Props) => {
+  const navigate = useNavigate()
+
   return (
     <div className={"p-4 mb-4 bg-body " + cl.vacancy}>
       {
@@ -30,7 +34,15 @@ const Vacancy = ({ vacancy }: Props) => {
             </div>
           </div>
           <p className={"mb-3 ms-1"}>{vacancy.description}</p>
-          <Button size={'lg'} className={cl.moreDetail}>Подробнее</Button>
+          <Button 
+            size={'lg'} 
+            className={cl.moreDetail} 
+            onClick={() => {
+              navigate(DETAILED_VACANCY_ROUTE, { state: vacancy.id })
+            }}
+          >
+            Подробнее
+          </Button>
           <p className={cl.vacancyDate}>
             {vacancy.createdAt.getDate()} {months[vacancy.createdAt.getMonth()]} {vacancy.createdAt.getFullYear()}
           </p>
