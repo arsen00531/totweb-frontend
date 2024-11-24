@@ -1,3 +1,5 @@
+import { Graphic } from "../../../models/Vacancy";
+
 export interface IGraphic {
     all: boolean;
     graphicFullDay: boolean;
@@ -8,12 +10,12 @@ export interface IGraphic {
 
 export interface IGraphicConfig {
     label: string;
-    id: keyof IGraphic
+    id: Graphic
 }
 
 export const graphicConfig: IGraphicConfig[] = [
-    { label: "Полный день", id: "graphicFullDay" }, 
-    { label: "Сменный график", id: "graphicChange" }, 
-    { label: "Гибкий график", id: "graphicElastic" }, 
-    { label: "Удалённая работа", id: "graphicHome" }
+    { label: "Полный день", id: Graphic.GRAPHIC_FULLDAY }, 
+    { label: "Сменный график", id: Graphic.GRAPHIC_CHANGE }, 
+    { label: "Гибкий график", id: Graphic.GRAPHIC_ELASTIC }, 
+    { label: "Удалённая работа", id: Graphic.GRAPHIC_HOME }
 ]

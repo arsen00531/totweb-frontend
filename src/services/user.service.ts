@@ -6,6 +6,14 @@ import { ICompanyInfo } from "../components/EditProfileCompany/EditProfileCompan
 export class StudentService {
   private static readonly controllerPrefix = "student";
 
+  static async findOne(studentId: number) {
+    return $api.get<IStudent>(`${this.controllerPrefix}/findOne`, {
+      params: {
+        studentId: String(studentId),
+      },
+    });
+  }
+
   static async update(updateStudentInfo: IStudentUpdate, id: number) {
     return $api.put<IStudent>(
       `${this.controllerPrefix}/update`,

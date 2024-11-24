@@ -20,6 +20,18 @@ export interface IVacancy {
     requirements: string[];
     conditions: string[];
     company: ICompany;
-    profession: IProfession[];
+    profession: IProfession;
     createdAt: Date;
+}
+
+export interface IVacancyCreate {
+    title: string;
+    price?: string;
+    city: string;
+    description: string;
+    graphic: Graphic[];
+    duties: string[];
+    requirements: string[];
+    conditions: string[];
+    professionId: number;
 }

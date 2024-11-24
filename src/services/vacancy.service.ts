@@ -2,15 +2,31 @@ import $api from "../http";
 import { AxiosResponse } from "axios";
 import { VacancyReponse } from "../models/response/VacancyResponse";
 import { IFindAllVacancyQuery } from "../models/queries/findAllVacancy.query";
+import { IVacancyCreate } from "../models/Vacancy";
 
 export default class VacancyService {
-    private static readonly controllerPrefix = "vacancy"
+  private static readonly controllerPrefix = "vacancy";
 
-    static async findAll(findAllQuery?: IFindAllVacancyQuery): Promise<AxiosResponse<VacancyReponse[]>> {
-        return $api.get<VacancyReponse[]>(`${this.controllerPrefix}/findAll`, { params: findAllQuery })
-    }
+  static async create(
+    vacancy: IVacancyCreate
+  ): Promise<AxiosResponse<VacancyReponse>> {
+    return $api.post<VacancyReponse>(
+      `${this.controllerPrefix}/create`,
+      vacancy
+    );
+  }
 
-    static async findOne(id: number): Promise<AxiosResponse<VacancyReponse>> {
-        return $api.get<VacancyReponse>(`${this.controllerPrefix}/findOne`, { params: { id: String(id) } })
-    }
+  static async findAll(
+    findAllQuery?: IFindAllVacancyQuery
+  ): Promise<AxiosResponse<VacancyReponse[]>> {
+    return $api.get<VacancyReponse[]>(`${this.controllerPrefix}/findAll`, {
+      params: findAllQuery,
+    });
+  }
+
+  static async findOne(id: number): Promise<AxiosResponse<VacancyReponse>> {
+    return $api.get<VacancyReponse>(`${this.controllerPrefix}/findOne`, {
+      params: { id: String(id) },
+    });
+  }
 }

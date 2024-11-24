@@ -16,9 +16,9 @@ const ProfileCompany = () => {
           <h4 style={{ borderBottom: "none" }}>Основная информация</h4>
           <ProfileButtons />
         </div>
-        <p className="mt-2">Отрасль: {company?.industry}</p>
-        <p className="mt-2">Местоположение: {company?.location}</p>
-        <p className="mt-2">Размер компании: {company?.size}</p>
+        <p className="mt-2">Отрасль: {company?.industry ?? "не указано"}</p>
+        <p className="mt-2">Местоположение: {company?.location ?? "не указано"}</p>
+        <p className="mt-2">Размер компании: {company?.size ?? "не указано"}</p>
       </div>
       <div className="about_us">
         <h4>О нас</h4>

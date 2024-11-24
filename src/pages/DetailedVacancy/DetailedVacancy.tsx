@@ -60,8 +60,8 @@ const DetailedVacancy = () => {
                         {
                             vacancy?.duties &&
                                 vacancy.duties.map(
-                                    (dutie) => 
-                                    <li>{dutie}</li>
+                                    (dutie, index) => 
+                                    <li key={index}>{dutie}</li>
                             )
                         }
                     </ul>
@@ -72,8 +72,8 @@ const DetailedVacancy = () => {
                         {
                             vacancy?.requirements &&
                                 vacancy.requirements.map(
-                                    (requirement) => 
-                                    <li>{requirement}</li>
+                                    (requirement, index) => 
+                                    <li key={index}>{requirement}</li>
                             )
                         }
                     </ul>
@@ -84,8 +84,8 @@ const DetailedVacancy = () => {
                         {
                             vacancy?.conditions &&
                                 vacancy.conditions.map(
-                                    (condition) => 
-                                    <li>{condition}</li>
+                                    (condition, index) => 
+                                    <li key={index}>{condition}</li>
                             )
                         }
                     </ul>

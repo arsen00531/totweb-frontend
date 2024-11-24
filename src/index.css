@@ -6,6 +6,28 @@ p {
    word-break: break-word;
 }
 
+.trash {
+   border: none;
+   background: #ff000073;
+   border-radius: 4px;
+
+   svg {
+       margin-bottom: 3px;
+   }
+}
+
+.formGroup {
+   display: flex;
+   align-items: center;
+   gap: 20px;
+   margin: 0;
+
+   p {
+       margin: 0;
+       white-space: nowrap;
+   }
+}
+
 @keyframes op {
     0% {
        filter:blur(50px) opacity(0);

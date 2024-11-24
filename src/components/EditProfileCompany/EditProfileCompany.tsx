@@ -1,6 +1,7 @@
 import { Form } from "react-bootstrap";
 import { useUser } from "../../store/user.store";
 import cl from "../../pages/Profile/_Profile.module.scss";
+import cl_company from "../ProfileCompany/_ProfileCompany.module.scss";
 import { useEffect, useState } from "react";
 import { IVacancy } from "../../models/Vacancy";
 import { MDBBtn } from "mdb-react-ui-kit";
@@ -194,7 +195,7 @@ const EditProfileCompany = () => {
           <h4>Доступные вакансии</h4>
           {companyInfo?.vacancies &&
             companyInfo.vacancies.map((vacancy) => (
-              <div key={vacancy.id} className={cl.accessVacancy + " mb-3"}>
+              <div key={vacancy.id} className={cl_company.accessVacancy + " mb-3"}>
                 <h3>{vacancy.title}</h3>
                 <MDBBtn
                   type={"button"}

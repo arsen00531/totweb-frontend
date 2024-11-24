@@ -6,20 +6,32 @@ import Header from './components/Header/Header.tsx';
 import { useProfession } from './store/profession.store.ts';
 import { useUser } from './store/user.store.ts';
 import "./style/scss/registration.scss";
+import { LOGIN_ROUTE } from './utils/constants/routes.constants.ts';
+import { useNotification } from './store/notification.store.ts';
 
 function App() {
   const { checkAuth, setIsLoading, isAuth, roles } = useUser()
   const { setProfessions } = useProfession()
+  const { setCompanyNotifications } = useNotification()
 
   useEffect(() => {
+    check()
+  }, [])
+
+  const check = async () => {
     const token = localStorage.getItem('token')
     if (token) {
-      checkAuth(token)
+      const check = await checkAuth(token)
+
+      if (check === false) {
+        window.location.replace(`${import.meta.env.VITE_HOST_FRONTEND}${LOGIN_ROUTE}`);
+      }
     } else {
       setIsLoading(false)
     }
     setProfessions()
-  }, [])
+    setCompanyNotifications()
+  }
 
   return (
       <BrowserRouter>

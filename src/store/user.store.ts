@@ -26,7 +26,7 @@ export interface UserState {
     id: number
   ) => Promise<void>;
   logout: (role: UserRoles[]) => Promise<void>;
-  checkAuth: (localStorageToken: string) => Promise<void>;
+  checkAuth: (localStorageToken: string) => Promise<boolean | undefined>;
 }
 
 export const useUser = create<UserState>((set) => ({
@@ -92,6 +92,8 @@ export const useUser = create<UserState>((set) => ({
           student: response.data.student,
           roles: payload.role,
         });
+
+        return true
       } else if (payload?.role.includes(UserRoles.Company)) {
         response = await CompanyAuthService.refreshState();
         localStorage.setItem("token", response.data.accessToken);
@@ -100,6 +102,8 @@ export const useUser = create<UserState>((set) => ({
           company: response.data.company,
           roles: payload.role,
         });
+
+        return true
       }
     } catch (error) {
       const err = error as AxiosError;
@@ -108,6 +112,8 @@ export const useUser = create<UserState>((set) => ({
           localStorage.removeItem("token");
         }
       }
+
+      return false
     } finally {
       set({ isLoading: false });
     }

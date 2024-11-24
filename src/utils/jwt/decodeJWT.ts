@@ -12,6 +12,10 @@ export function parseJwt (token: string | null): TAccessUserPayload | TAccessCom
     return JSON.parse(jsonPayload);
 }
 
+export function isAccessCompanyPayload(payload: any): payload is TAccessCompanyPayload {
+    return payload?.role.includes(UserRoles.Company);
+}
+
 export type TAccessUserPayload = {
     userId: number;
     email: string;

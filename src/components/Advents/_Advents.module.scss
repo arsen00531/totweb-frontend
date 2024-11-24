@@ -1,0 +1,23 @@
+.adventsBlocks {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  .adventsBlock {
+    padding: 1em;
+    box-shadow: 0 1px 13px rgba(0, 0, 0, .15);
+    max-width: 30%;
+  }
+}
+
+@media (max-width: 991px) {
+  .adventsBlocks {
+
+    .adventsBlock {
+      max-width: 100%;
+      flex-grow: 1;
+    }
+  }
+}
