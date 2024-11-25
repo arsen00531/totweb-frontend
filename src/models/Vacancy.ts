@@ -35,3 +35,15 @@ export interface IVacancyCreate {
     conditions: string[];
     professionId: number;
 }
+
+export interface IVacancyUpdate {
+    title: string;
+    price?: string;
+    city: string;
+    description: string;
+    graphic: Graphic[];
+    duties: string[];
+    requirements: string[];
+    conditions: string[];
+    professionId: number;
+}

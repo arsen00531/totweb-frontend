@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IVacancy, IVacancyCreate } from "../models/Vacancy";
+import { IVacancy, IVacancyCreate, IVacancyUpdate } from "../models/Vacancy";
 import VacancyService from "../services/vacancy.service";
 import { IFindAllVacancyQuery } from "../models/queries/findAllVacancy.query";
 
@@ -12,6 +12,8 @@ export interface VacancyState {
   createVacancy: (vacancy: IVacancyCreate) => Promise<void>;
   updateCurrentPage: (page: number) => void;
   updateVacancies: (findAllQuery?: IFindAllVacancyQuery) => Promise<void>;
+  updateVacancy: (id: number, updateVacancyDto: IVacancyUpdate) => Promise<void>;
+  deleteVacancy: (vacancyId: number, vacancies: IVacancy[]) => Promise<void>;
   addVacancies: (vacancies: IVacancy[], findAllQuery?: IFindAllVacancyQuery) => Promise<void>
 }
 
@@ -50,6 +52,15 @@ export const useVacancy = create<VacancyState>((set) => ({
       vacancies: data,
       currentPage: findAllQuery?.page && findAllQuery.page,
     });
+  },
+  updateVacancy: async (id: number, updateVacancyDto: IVacancyUpdate) => {
+    await VacancyService.update(id, updateVacancyDto)
+  },
+  deleteVacancy: async (vacancyId: number, vacancies: IVacancy[]) => {
+    await VacancyService.delete(vacancyId)
+    const updatedVacancies = vacancies.filter((vacancy) => vacancy.id !== vacancyId)
+
+    set({ vacancies: updatedVacancies })
   },
   addVacancies: async (vacancies: IVacancy[], findAllQuery?: IFindAllVacancyQuery) => {
     const newVacancies = await VacancyService.findAll(findAllQuery);

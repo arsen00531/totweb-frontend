@@ -12,6 +12,8 @@ import {
   DETAILED_VACANCY_ROUTE,
   PROFILE_ROUTE,
 } from "../../utils/constants/routes.constants";
+import { useVacancy } from "../../store/vacancy.store";
+import PencilButton from "../../UI/buttons/PencilButton";
 
 export interface ICompanyInfo {
   industry: string | null;
@@ -26,6 +28,7 @@ export interface ICompanyInfo {
 }
 
 const EditProfileCompany = () => {
+  const { vacancies, deleteVacancy } = useVacancy()
   const { company, updateCompanyInfo } = useUser();
   const [companyInfo, setCompanyInfo] = useState<ICompanyInfo>({
     industry: "",
@@ -195,18 +198,34 @@ const EditProfileCompany = () => {
           <h4>Доступные вакансии</h4>
           {companyInfo?.vacancies &&
             companyInfo.vacancies.map((vacancy) => (
-              <div key={vacancy.id} className={cl_company.accessVacancy + " mb-3"}>
+              <div
+                key={vacancy.id}
+                className={cl_company.accessVacancy + " mb-3"}
+              >
                 <h3>{vacancy.title}</h3>
-                <MDBBtn
-                  type={"button"}
-                  onClick={() =>
-                    navigate(DETAILED_VACANCY_ROUTE, {
-                      state: vacancy.id,
-                    })
-                  }
-                >
-                  Открыть
-                </MDBBtn>
+                <div className={"d-flex"} style={{ gap: "1em" }}>
+                  <PencilButton onClick={() => navigate(CREATE_VACANCY_ROUTE, { state: vacancy.id })} />
+                  <button
+                    className={cl.trash}
+                    type={"button"}
+                    onClick={() => {
+                      deleteVacancy(vacancy.id, vacancies)
+                      setCompanyInfo({ ...companyInfo, vacancies: vacancies.filter((vacanc) => vacanc.id !== vacancy.id) })
+                    }}
+                  >
+                    <FaRegTrashAlt />
+                  </button>
+                  <MDBBtn
+                    type={"button"}
+                    onClick={() =>
+                      navigate(DETAILED_VACANCY_ROUTE, {
+                        state: vacancy.id,
+                      })
+                    }
+                  >
+                    Открыть
+                  </MDBBtn>
+                </div>
               </div>
             ))}
           <MDBBtn

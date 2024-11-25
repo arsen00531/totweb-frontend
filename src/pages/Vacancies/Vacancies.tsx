@@ -356,7 +356,7 @@ const Vacancies = () => {
             </Button>
           </div>
           <p>Найдено вакансий: {vacancies.length}</p>
-          {vacancies && (
+          {vacancies && vacancies.length !== 0 && (
             <>
               {vacancies.map((vacancy) => (
                 <Vacancy vacancy={vacancy} key={vacancy.id} />

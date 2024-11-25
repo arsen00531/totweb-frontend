@@ -9,7 +9,7 @@ import FormTextInput from "../../components/FormTextInput/FormTextInput";
 import { useVacancy } from "../../store/vacancy.store";
 import { PROFILE_ROUTE } from "../../utils/constants/routes.constants";
 import { useEffect, useState } from "react";
-import { IVacancyCreate } from "../../models/Vacancy";
+import { IVacancyCreate, IVacancyUpdate } from "../../models/Vacancy";
 import { graphicConfig } from "../Vacancies/config/graphic.config";
 import CheckBox from "../../UI/inputs/CheckBox";
 import { useProfession } from "../../store/profession.store";
@@ -17,6 +17,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 import { FaRegTrashAlt } from "react-icons/fa";
 import TextError from "../../UI/errors/TextError";
 import { useLocation } from "react-router-dom";
+import VacancyService from "../../services/vacancy.service";
 
 interface IVacancyInfo {
   graphic: boolean[];
@@ -29,7 +30,7 @@ interface IVacancyInfo {
 const CreateVacancy = () => {
   const { state }: { state: number } = useLocation()
   const { professions } = useProfession();
-  const { createVacancy } = useVacancy();
+  const { createVacancy, updateVacancy } = useVacancy();
 
   const [vacancyInfo, setVacancyInfo] = useState<IVacancyInfo>({
     graphic: Array.from({ length: graphicConfig.length })
@@ -75,6 +76,23 @@ const CreateVacancy = () => {
     }
 
     const profession = professions[profIndex];
+
+    if (state) {
+      const updateVacancyDto: IVacancyUpdate = {
+        ...data,
+        graphic: graphics,
+        duties: vacancyInfo.duties,
+        requirements: vacancyInfo.requirements,
+        conditions: vacancyInfo.conditions,
+        professionId: profession.id,
+      }
+
+      await updateVacancy(state, updateVacancyDto)
+      window.location.replace(`${import.meta.env.VITE_HOST_FRONTEND}${PROFILE_ROUTE}`);
+
+      return
+    }
+
     const vacancyCreate: IVacancyCreate = {
       ...data,
       price: data.price,
@@ -89,6 +107,28 @@ const CreateVacancy = () => {
 
     window.location.replace(`${import.meta.env.VITE_HOST_FRONTEND}${PROFILE_ROUTE}`);
   });
+
+  const setVacancy = async () => {
+    if (state) {
+      const vacancyResponse = await VacancyService.findOne(state)
+
+      if (vacancyResponse.data) {
+        const vacancy = vacancyResponse.data
+
+        setVacancyInfo({
+          graphic: vacancyInfo.graphic,
+          profession: vacancyInfo.profession,
+          duties: vacancy.duties ?? [],
+          requirements: vacancy.requirements,
+          conditions: vacancy.conditions,
+        })
+      }
+    }
+  }
+
+  useEffect(() => {
+    setVacancy()
+  }, []);
 
   useEffect(() => {
     const profess = Array.from({ length: professions.length }, () => false);
