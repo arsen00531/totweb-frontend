@@ -6,7 +6,7 @@ import cl from "./_Vacancy.module.scss";
 import { months } from "../../pages/Vacancies/config/month";
 import H2Black from "../../UI/text/H2Black";
 import { useNavigate } from "react-router-dom";
-import { DETAILED_VACANCY_ROUTE } from "../../utils/constants/routes.constants";
+import { CREATE_VACANCY_ROUTE, DETAILED_VACANCY_ROUTE } from "../../utils/constants/routes.constants";
 import { useUser } from "../../store/user.store";
 import { UserRoles } from "../../models/User";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -30,6 +30,7 @@ const Vacancy = ({ vacancy }: Props) => {
             <>
               <PencilButton
                 style={{ position: "absolute", right: "3.5em", top: "1em" }}
+                onClick={() => navigate(CREATE_VACANCY_ROUTE, { state: vacancy.id })}
               />
               <button
                 className={cl.trash}

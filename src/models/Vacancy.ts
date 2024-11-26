@@ -12,10 +12,10 @@ export enum Graphic {
 export interface IVacancy {
     id: number;
     title: string;
-    price?: number;
+    price?: string;
     city: string;
     description: string;
-    graphic: Graphic[] | [];
+    graphic: Graphic[];
     duties: string[] | null;
     requirements: string[];
     conditions: string[];

@@ -1,21 +1,12 @@
-import { Button, Container, Form } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import cl from "./_CreateVacancy.module.scss";
-import { useForm } from "react-hook-form";
-import { TFormTextConfigVacancy, TFormVacancy } from "./types";
-import { VacancyCreateSchema } from "./config/userShema";
-import { formTextVacancy } from "./config/formTextConfig";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormTextInput from "../../components/FormTextInput/FormTextInput";
+import { TFormVacancy } from "./types";
 import { useVacancy } from "../../store/vacancy.store";
 import { PROFILE_ROUTE } from "../../utils/constants/routes.constants";
 import { useEffect, useState } from "react";
 import { IVacancyCreate, IVacancyUpdate } from "../../models/Vacancy";
 import { graphicConfig } from "../Vacancies/config/graphic.config";
-import CheckBox from "../../UI/inputs/CheckBox";
 import { useProfession } from "../../store/profession.store";
-import { MDBBtn } from "mdb-react-ui-kit";
-import { FaRegTrashAlt } from "react-icons/fa";
-import TextError from "../../UI/errors/TextError";
 import { useLocation } from "react-router-dom";
 import VacancyService from "../../services/vacancy.service";
 import VacancyForm from "../../UI/forms/VacancyForm";
@@ -30,12 +21,8 @@ export interface IVacancyInfo {
 
 const CreateVacancy = () => {
   const { state }: { state: number } = useLocation();
-
   const { createVacancy, updateVacancy } = useVacancy();
-
   const [status, setStatus] = useState(false);
-
-
 
   const [vacancyInfo, setVacancyInfo] = useState<IVacancyInfo>({
     graphic: Array.from({ length: graphicConfig.length })
@@ -55,47 +42,44 @@ const CreateVacancy = () => {
   });
 
   const [isProfessionSelected, setIsProfessionSelected] = useState(true);
-
   const [isGraphicSelected, setIsGraphicSelected] = useState(true);
-
   const { professions } = useProfession();
 
   useEffect(() => {
     const profess = Array.from({ length: professions.length }, () => false);
     setVacancyInfo({ ...vacancyInfo, profession: profess });
+
+    setVacancy(profess);
   }, [professions]);
 
-  const setVacancy = async () => {
+  const setVacancy = async (profess: boolean[]) => {
     if (state) {
       const vacancyResponse = await VacancyService.findOne(state);
 
       if (vacancyResponse.data) {
         const vacancy = vacancyResponse.data;
 
+        const professMap = profess.map((_, index) => professions[index].id === vacancy.profession.id ? true : false)
+
         setVacancyInfo({
-          graphic: vacancyInfo.graphic,
-          profession: vacancyInfo.profession,
+          graphic: vacancyInfo.graphic.map((_, index) => vacancy.graphic.includes(graphicConfig[index].id)),
+          profession: professMap,
           duties: vacancy.duties ?? [],
           requirements: vacancy.requirements,
           conditions: vacancy.conditions,
         });
         
         setInitalForm({
-          title: "Привет",
-          description: "",
-          city: "",
-          price: "",
+          title: vacancy.title,
+          description: vacancy.description,
+          city: vacancy.city,
+          price: vacancy.price ?? "",
         });
       }
     }
 
     setStatus(true);
   };
-
-  useEffect(() => {
-    setVacancy();
-  }, []);
-
 
 
   const onSubmit = (async (data: TFormVacancy) => {
