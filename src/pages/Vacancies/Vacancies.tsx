@@ -25,9 +25,10 @@ const Vacancies = () => {
     threshold: 0.5, // Элемент считается видимым, когда 50% его высоты видно
   });
 
-  const { state }: { state: string } = useLocation()
+  const { state }: { state: string } = useLocation();
 
-  const { vacancies, setVacancies, updateVacancies, addVacancies } = useVacancy();
+  const { vacancies, setVacancies, updateVacancies, addVacancies } =
+    useVacancy();
   const { professions } = useProfession();
 
   const [selectedItem, setSelectedItem] = useState("");
@@ -46,7 +47,7 @@ const Vacancies = () => {
 
   useEffect(() => {
     if (state) {
-      setSearch(state)
+      setSearch(state);
     }
     setVacancies(state);
   }, []);

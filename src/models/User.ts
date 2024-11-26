@@ -16,7 +16,7 @@ export interface IStudent {
     roles: UserRoles[] | [];
     photo: string | null;
     profession: string;
-    experiences: IExperience[]
+    experiences: IExperience[];
 }
 
 export interface IStudentUpdate extends IStudentInfo {

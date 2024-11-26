@@ -7,7 +7,7 @@ import { UserRoles } from "../models/User";
 export interface NotificationState {
   companyNotifications: INotification[];
   isLoading: boolean;
-  create: (companyId: number, studentId: number) => Promise<void>;
+  createNotification: (companyId: number, studentId: number, vacancyId: number) => Promise<void>;
   setCompanyNotifications: () => void;
   setIsLoading: (bool: boolean) => void;
 }
@@ -15,8 +15,8 @@ export interface NotificationState {
 export const useNotification = create<NotificationState>((set) => ({
   companyNotifications: [],
   isLoading: true,
-  create: async (companyId: number, studentId: number) => {
-    await NotificationService.create(companyId, studentId);
+  createNotification: async (companyId: number, studentId: number, vacancyId: number) => {
+    await NotificationService.create(companyId, studentId, vacancyId);
   },
   setCompanyNotifications: async () => {
     try {

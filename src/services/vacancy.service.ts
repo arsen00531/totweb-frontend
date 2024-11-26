@@ -30,10 +30,17 @@ export default class VacancyService {
     });
   }
 
-  static async update(id: number, updateVacancyDto: IVacancyUpdate): Promise<AxiosResponse<VacancyReponse>> {
-    return $api.put<VacancyReponse>(`${this.controllerPrefix}/update`, updateVacancyDto, {
-      params: { id: String(id) },
-    });
+  static async update(
+    id: number,
+    updateVacancyDto: IVacancyUpdate
+  ): Promise<AxiosResponse<VacancyReponse>> {
+    return $api.put<VacancyReponse>(
+      `${this.controllerPrefix}/update`,
+      updateVacancyDto,
+      {
+        params: { id: String(id) },
+      }
+    );
   }
 
   static async delete(id: number): Promise<AxiosResponse<VacancyReponse>> {

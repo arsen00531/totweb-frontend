@@ -1,13 +1,15 @@
-import { Button } from "react-bootstrap"
+import { Button } from "react-bootstrap";
 
 type Props = {
-  text: string,
-  type?: "submit" | "reset" | "button" | undefined,
-  addClasses?: string
-}
+  text: string;
+  type?: "submit" | "reset" | "button" | undefined;
+  addClasses?: string;
+};
 
-export default function PrimaryButton({ text, type, addClasses = '' }: Props) {
+export default function PrimaryButton({ text, type, addClasses = "" }: Props) {
   return (
-    <Button type={type} className={addClasses}>{text}</Button>
-  )
+    <Button type={type} className={addClasses}>
+      {text}
+    </Button>
+  );
 }

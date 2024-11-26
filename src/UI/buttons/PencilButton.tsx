@@ -1,10 +1,10 @@
-import cl from './_Buttons.module.scss'
+import cl from "./_Buttons.module.scss";
 import { FaPencilAlt } from "react-icons/fa";
 
 type Props = {
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined,
-  style?: React.CSSProperties | undefined
-}
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  style?: React.CSSProperties | undefined;
+};
 
 const PencilButton = ({ style, onClick }: Props) => {
   return (
@@ -16,7 +16,7 @@ const PencilButton = ({ style, onClick }: Props) => {
     >
       <FaPencilAlt />
     </button>
-  )
-}
+  );
+};
 
-export default PencilButton
+export default PencilButton;

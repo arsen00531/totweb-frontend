@@ -93,7 +93,7 @@ export const useUser = create<UserState>((set) => ({
           roles: payload.role,
         });
 
-        return true
+        return true;
       } else if (payload?.role.includes(UserRoles.Company)) {
         response = await CompanyAuthService.refreshState();
         localStorage.setItem("token", response.data.accessToken);
@@ -103,7 +103,7 @@ export const useUser = create<UserState>((set) => ({
           roles: payload.role,
         });
 
-        return true
+        return true;
       }
     } catch (error) {
       const err = error as AxiosError;
@@ -113,7 +113,7 @@ export const useUser = create<UserState>((set) => ({
         }
       }
 
-      return false
+      return false;
     } finally {
       set({ isLoading: false });
     }
