@@ -18,8 +18,9 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import TextError from "../../UI/errors/TextError";
 import { useLocation } from "react-router-dom";
 import VacancyService from "../../services/vacancy.service";
+import VacancyForm from "../../UI/forms/VacancyForm";
 
-interface IVacancyInfo {
+export interface IVacancyInfo {
   graphic: boolean[];
   profession: boolean[];
   duties: string[];
@@ -28,9 +29,13 @@ interface IVacancyInfo {
 }
 
 const CreateVacancy = () => {
-  const { state }: { state: number } = useLocation()
-  const { professions } = useProfession();
+  const { state }: { state: number } = useLocation();
+
   const { createVacancy, updateVacancy } = useVacancy();
+
+  const [status, setStatus] = useState(false);
+
+
 
   const [vacancyInfo, setVacancyInfo] = useState<IVacancyInfo>({
     graphic: Array.from({ length: graphicConfig.length })
@@ -42,23 +47,58 @@ const CreateVacancy = () => {
     conditions: [],
   });
 
-  const [isProfessionSelected, setIsProfessionSelected] = useState(true)
-  const [isGraphicSelected, setIsGraphicSelected] = useState(true)
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<TFormVacancy>({
-    resolver: zodResolver(VacancyCreateSchema),
-    mode: "onBlur",
+  const [initialForm, setInitalForm] = useState({
+    title: "",
+    description: "",
+    city: "",
+    price: "",
   });
-  const formTextConfig: TFormTextConfigVacancy[] = formTextVacancy(
-    register,
-    errors
-  );
 
-  const onSubmit = handleSubmit(async (data: TFormVacancy) => {
+  const [isProfessionSelected, setIsProfessionSelected] = useState(true);
+
+  const [isGraphicSelected, setIsGraphicSelected] = useState(true);
+
+  const { professions } = useProfession();
+
+  useEffect(() => {
+    const profess = Array.from({ length: professions.length }, () => false);
+    setVacancyInfo({ ...vacancyInfo, profession: profess });
+  }, [professions]);
+
+  const setVacancy = async () => {
+    if (state) {
+      const vacancyResponse = await VacancyService.findOne(state);
+
+      if (vacancyResponse.data) {
+        const vacancy = vacancyResponse.data;
+
+        setVacancyInfo({
+          graphic: vacancyInfo.graphic,
+          profession: vacancyInfo.profession,
+          duties: vacancy.duties ?? [],
+          requirements: vacancy.requirements,
+          conditions: vacancy.conditions,
+        });
+        
+        setInitalForm({
+          title: "Привет",
+          description: "",
+          city: "",
+          price: "",
+        });
+      }
+    }
+
+    setStatus(true);
+  };
+
+  useEffect(() => {
+    setVacancy();
+  }, []);
+
+
+
+  const onSubmit = (async (data: TFormVacancy) => {
     const graphicsInfo = graphicConfig.filter((_, i) =>
       vacancyInfo.graphic[i] ? true : false
     );
@@ -108,263 +148,26 @@ const CreateVacancy = () => {
     window.location.replace(`${import.meta.env.VITE_HOST_FRONTEND}${PROFILE_ROUTE}`);
   });
 
-  const setVacancy = async () => {
-    if (state) {
-      const vacancyResponse = await VacancyService.findOne(state)
-
-      if (vacancyResponse.data) {
-        const vacancy = vacancyResponse.data
-
-        setVacancyInfo({
-          graphic: vacancyInfo.graphic,
-          profession: vacancyInfo.profession,
-          duties: vacancy.duties ?? [],
-          requirements: vacancy.requirements,
-          conditions: vacancy.conditions,
-        })
-      }
-    }
-  }
-
-  useEffect(() => {
-    setVacancy()
-  }, []);
-
-  useEffect(() => {
-    const profess = Array.from({ length: professions.length }, () => false);
-    setVacancyInfo({ ...vacancyInfo, profession: profess });
-  }, [professions]);
 
   return (
     <Container className={cl.createVacancy + " pt-5"}>
-      <h2>{ state ? "Изменить вакансию" : "Создать вакансию" }</h2>
-
-      <Form className={cl.createForm + " p-3"}>
-        {formTextConfig.map((formInput, index) => (
-          <FormTextInput
-            key={index}
-            maxLength={formInput.maxLength}
-            error={formInput.error}
-            name={formInput.name}
-            isTextarea={formInput.name === "description"}
-            register={formInput.register}
-            title={formInput.title}
-            type={formInput.type}
-          />
-        ))}
-
-        <div className={cl.graphics}>
-          <h4>График работы</h4>
-          {graphicConfig.map((config, index) => (
-            <CheckBox
-              key={index}
-              label={config.label}
-              name="graphic"
-              id={config.id}
-              checked={vacancyInfo.graphic[index]}
-              onChange={() =>
-                setVacancyInfo({
-                  ...vacancyInfo,
-                  graphic: vacancyInfo.graphic.map((graphic, i) =>
-                    index === i ? !vacancyInfo.graphic[index] : graphic
-                  ),
-                })
-              }
-            />
-          ))}
-          {
-            !isGraphicSelected && <TextError error={"Выберите график работы"} />
-          }
-        </div>
-
-        <div className="professions">
-          <h4>Профессия</h4>
-          {vacancyInfo.profession.map((profession, index) => (
-            <CheckBox
-              key={index}
-              label={professions[index].name ?? ""}
-              name={professions[index].name ?? ""}
-              checked={profession}
-              onChange={() =>
-                setVacancyInfo({
-                  ...vacancyInfo,
-                  profession: vacancyInfo.profession.map((_, i) =>
-                    index === i ? !profession : false
-                  ),
-                })
-              }
-            />
-          ))}
-          {
-            !isProfessionSelected && <TextError error={"Выберите профессию"} />
-          }
-        </div>
-
-        <div className={cl.duties + " mb-5"}>
-          <h2 className="mb-4">Обязанности</h2>
-          <ul>
-            {vacancyInfo?.duties && vacancyInfo.duties.length !== 0 ? (
-              vacancyInfo?.duties.map((dutie, index) => (
-                <Form.Group className={"formGroup"} key={index}>
-                  <Form.Control
-                    placeholder="Описание"
-                    value={dutie}
-                    onChange={(e) => {
-                      const newDuties = vacancyInfo.duties.map(
-                        (newProject, i) =>
-                          i === index ? e.target.value : newProject
-                      );
-                      setVacancyInfo({ ...vacancyInfo, duties: newDuties });
-                    }}
-                  />
-                  <button
-                    className={"trash"}
-                    type={"button"}
-                    onClick={() => {
-                      setVacancyInfo({
-                        ...vacancyInfo,
-                        duties: vacancyInfo.duties.filter(
-                          (_, i) => i !== index
-                        ),
-                      });
-                    }}
-                  >
-                    <FaRegTrashAlt />
-                  </button>
-                </Form.Group>
-              ))
-            ) : (
-              <p>Не указано</p>
-            )}
-          </ul>
-
-          <MDBBtn
-            type={"button"}
-            style={{ marginBottom: "1em" }}
-            onClick={() => {
-              vacancyInfo.duties.push("");
-              setVacancyInfo({ ...vacancyInfo, duties: vacancyInfo.duties });
-            }}
-          >
-            Добавить Обязанность
-          </MDBBtn>
-        </div>
-
-        <div className={"requirements mb-5"}>
-          <h2 className="mb-4">Требования</h2>
-          <ul>
-            {vacancyInfo?.requirements &&
-            vacancyInfo.requirements.length !== 0 ? (
-              vacancyInfo?.requirements.map((requirement, index) => (
-                <Form.Group className={"formGroup"} key={index}>
-                  <Form.Control
-                    placeholder="Описание"
-                    value={requirement}
-                    onChange={(e) => {
-                      const newRequirements = vacancyInfo.requirements.map(
-                        (newProject, i) =>
-                          i === index ? e.target.value : newProject
-                      );
-                      setVacancyInfo({
-                        ...vacancyInfo,
-                        requirements: newRequirements,
-                      });
-                    }}
-                  />
-                  <button
-                    className={"trash"}
-                    type={"button"}
-                    onClick={() => {
-                      setVacancyInfo({
-                        ...vacancyInfo,
-                        requirements: vacancyInfo.requirements.filter(
-                          (_, i) => i !== index
-                        ),
-                      });
-                    }}
-                  >
-                    <FaRegTrashAlt />
-                  </button>
-                </Form.Group>
-              ))
-            ) : (
-              <p>Не указано</p>
-            )}
-          </ul>
-
-          <MDBBtn
-            type={"button"}
-            style={{ marginBottom: "1em" }}
-            onClick={() => {
-              vacancyInfo.requirements.push("");
-              setVacancyInfo({
-                ...vacancyInfo,
-                requirements: vacancyInfo.requirements,
-              });
-            }}
-          >
-            Добавить требование
-          </MDBBtn>
-        </div>
-
-        <div className={"conditions mb-5"}>
-          <h2 className="mb-4">Условия</h2>
-          <ul>
-            {vacancyInfo?.conditions && vacancyInfo.conditions.length !== 0 ? (
-              vacancyInfo?.conditions.map((condition, index) => (
-                <Form.Group className={"formGroup"} key={index}>
-                  <Form.Control
-                    placeholder="Описание"
-                    value={condition}
-                    onChange={(e) => {
-                      const newConditions = vacancyInfo.conditions.map(
-                        (newProject, i) =>
-                          i === index ? e.target.value : newProject
-                      );
-                      setVacancyInfo({
-                        ...vacancyInfo,
-                        conditions: newConditions,
-                      });
-                    }}
-                  />
-                  <button
-                    className={"trash"}
-                    type={"button"}
-                    onClick={() => {
-                      setVacancyInfo({
-                        ...vacancyInfo,
-                        conditions: vacancyInfo.conditions.filter(
-                          (_, i) => i !== index
-                        ),
-                      });
-                    }}
-                  >
-                    <FaRegTrashAlt />
-                  </button>
-                </Form.Group>
-              ))
-            ) : (
-              <p>Не указано</p>
-            )}
-          </ul>
-
-          <MDBBtn
-            type={"button"}
-            style={{ marginBottom: "1em" }}
-            onClick={() => {
-              vacancyInfo.conditions.push("");
-              setVacancyInfo({
-                ...vacancyInfo,
-                conditions: vacancyInfo.conditions,
-              });
-            }}
-          >
-            Добавить абзац
-          </MDBBtn>
-        </div>
-
-        <Button type={"button"} onClick={onSubmit}>{ state ? "Сохранить" : "Создать" }</Button>
-      </Form>
+      <h2>{state ? "Изменить вакансию" : "Создать вакансию"}</h2>
+      {status ? (
+        <VacancyForm
+          onSubmit={onSubmit}
+          isGraphicSelected={isGraphicSelected}
+          isProfessionSelected={isProfessionSelected}
+          professions={professions}
+          setIsGraphicSelected={setIsGraphicSelected}
+          setIsProfessionSelected={setIsGraphicSelected}
+          vacancyInfo={vacancyInfo}
+          initialForm={initialForm}
+          state={state}
+          setVacancyInfo={setVacancyInfo}
+        />
+      ) : (
+        <p>Loading</p>
+      )}
     </Container>
   );
 };
