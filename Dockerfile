@@ -11,5 +11,5 @@ RUN npm run build
 FROM nginx:1.25.5
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
-COPY --from=builder /app/build .
+COPY --from=builder /app/dist .
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
