@@ -19,13 +19,5 @@ export const formTextAuth = (register: UseFormRegister<TFormAuth>, errors: Field
           register: register,
           error: errors.password,
         },
-        {
-          id: 4,
-          name:  "confirmPassword",
-          type: "password",
-          title: "Подтвердите пароль",
-          register: register,
-          error: errors.confirmPassword,
-        },
       ]
 }
