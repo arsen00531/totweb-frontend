@@ -1,5 +1,5 @@
 #Stage 1
-FROM node:22.11.0 as builder
+FROM node:22.11.0 AS builder
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
