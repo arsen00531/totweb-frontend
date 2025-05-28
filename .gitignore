@@ -1,6 +1,8 @@
 .env
 *.env
 
+*.conf
+
 # Logs
 logs
 *.log
