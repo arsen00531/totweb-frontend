@@ -1,5 +1,9 @@
 import { UserRoles } from "../../models/User";
 
+type Payload = {
+    role: string[]
+}
+
 export function parseJwt (token: string | null): TAccessUserPayload | TAccessCompanyPayload | null {
     if (token === null) {
         return null
@@ -12,7 +16,7 @@ export function parseJwt (token: string | null): TAccessUserPayload | TAccessCom
     return JSON.parse(jsonPayload);
 }
 
-export function isAccessCompanyPayload(payload: any): payload is TAccessCompanyPayload {
+export function isAccessCompanyPayload(payload: Payload): payload is TAccessCompanyPayload {
     return payload?.role.includes(UserRoles.Company);
 }
 

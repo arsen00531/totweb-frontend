@@ -8,6 +8,7 @@ import { useUser } from "./store/user.store.ts";
 import "./style/scss/registration.scss";
 import { LOGIN_ROUTE } from "./utils/constants/routes.constants.ts";
 import { useNotification } from "./store/notification.store.ts";
+import Footer from "./components/Footer/Footer.tsx";
 
 function App() {
   const { checkAuth, setIsLoading, isAuth, roles } = useUser();
@@ -60,6 +61,8 @@ function App() {
           <Route path={route.path} element={route.element} key={index} />
         ))}
       </Routes>
+
+      <Footer />
     </BrowserRouter>
   );
 }
